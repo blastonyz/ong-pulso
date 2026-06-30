@@ -6,32 +6,52 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 const agreementKeys = {
-  agreement: ["funding-agreement", "agreement"] as const,
-  milestones: ["funding-agreement", "milestones"] as const,
+  agreement: (contractId: string) =>
+    ["funding-agreement", contractId, "agreement"] as const,
+  milestones: (contractId: string) =>
+    ["funding-agreement", contractId, "milestones"] as const,
 };
 
 export function useAgreement() {
-  const { fundingAgreement, fundingAgreementContractId } = useSorobanContext();
+  const {
+    fundingAgreement,
+    fundingAgreementContractId,
+    setFundingAgreementContractId,
+  } = useSorobanContext();
   const queryClient = useQueryClient();
   const service = useMemo(
     () => new FundingAgreementService(fundingAgreement),
     [fundingAgreement],
   );
 
+  const liveQueryOptions = {
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: "always" as const,
+    refetchOnWindowFocus: true,
+    refetchInterval: 5_000,
+  };
+
   const agreement = useQuery({
-    queryKey: agreementKeys.agreement,
+    queryKey: agreementKeys.agreement(fundingAgreementContractId),
     queryFn: () => service.getAgreement(),
+    ...liveQueryOptions,
   });
 
   const milestones = useQuery({
-    queryKey: agreementKeys.milestones,
+    queryKey: agreementKeys.milestones(fundingAgreementContractId),
     queryFn: () => service.getMilestones(),
+    ...liveQueryOptions,
   });
 
   const invalidate = async () => {
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: agreementKeys.agreement }),
-      queryClient.invalidateQueries({ queryKey: agreementKeys.milestones }),
+      queryClient.invalidateQueries({
+        queryKey: agreementKeys.agreement(fundingAgreementContractId),
+      }),
+      queryClient.invalidateQueries({
+        queryKey: agreementKeys.milestones(fundingAgreementContractId),
+      }),
     ]);
   };
 
@@ -72,6 +92,7 @@ export function useAgreement() {
 
   return {
     contractId: fundingAgreementContractId,
+    setContractId: setFundingAgreementContractId,
     agreement,
     milestones,
     activate,

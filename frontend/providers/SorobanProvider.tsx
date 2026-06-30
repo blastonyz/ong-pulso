@@ -10,6 +10,7 @@ import {
   createContext,
   type ReactNode,
   useContext,
+  useState,
   useMemo,
 } from "react";
 
@@ -18,6 +19,7 @@ type SorobanContextValue = {
   rpcUrl: string;
   networkPassphrase: string;
   fundingAgreementContractId: string;
+  setFundingAgreementContractId: (contractId: string) => void;
   fundingAgreement: FundingAgreementClientType;
 };
 
@@ -25,10 +27,13 @@ const SorobanContext = createContext<SorobanContextValue | null>(null);
 
 export function SorobanProvider({ children }: { children: ReactNode }) {
   const { address, signTransaction } = useWalletContext();
+  const [activeContractId, setActiveContractId] = useState(
+    stellarConfig.fundingAgreementContractId,
+  );
 
   const value = useMemo(() => {
     const fundingAgreement = new FundingAgreementClient({
-      contractId: stellarConfig.fundingAgreementContractId,
+      contractId: activeContractId,
       networkPassphrase: stellarConfig.networkPassphrase,
       rpcUrl: stellarConfig.rpcUrl,
       publicKey: address ?? undefined,
@@ -46,10 +51,11 @@ export function SorobanProvider({ children }: { children: ReactNode }) {
       network: stellarConfig.network,
       rpcUrl: stellarConfig.rpcUrl,
       networkPassphrase: stellarConfig.networkPassphrase,
-      fundingAgreementContractId: stellarConfig.fundingAgreementContractId,
+      fundingAgreementContractId: activeContractId,
+      setFundingAgreementContractId: setActiveContractId,
       fundingAgreement,
     };
-  }, [address, signTransaction]);
+  }, [activeContractId, address, signTransaction]);
 
   return (
     <SorobanContext.Provider value={value}>{children}</SorobanContext.Provider>
