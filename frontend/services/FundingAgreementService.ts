@@ -1,0 +1,40 @@
+import type {
+  Agreement,
+  Client as FundingAgreementClient,
+  Milestone,
+  Status,
+} from "@/contracts/funding-agreement/src";
+
+export class FundingAgreementService {
+  constructor(private readonly client: FundingAgreementClient) {}
+
+  async getAgreement(): Promise<Agreement> {
+    const tx = await this.client.get_agreement();
+    return tx.result.unwrap();
+  }
+
+  async getStatus(): Promise<Status> {
+    const tx = await this.client.get_status();
+    return tx.result.unwrap();
+  }
+
+  async getMilestones(): Promise<Milestone[]> {
+    const tx = await this.client.get_milestones();
+    return tx.result.unwrap();
+  }
+
+  async activate() {
+    const tx = await this.client.activate();
+    return tx.signAndSend();
+  }
+
+  async pause() {
+    const tx = await this.client.pause();
+    return tx.signAndSend();
+  }
+
+  async resume() {
+    const tx = await this.client.resume();
+    return tx.signAndSend();
+  }
+}
