@@ -50,6 +50,26 @@ export function useAgreement() {
     onSuccess: invalidate,
   });
 
+  const submitMilestone = useMutation({
+    mutationFn: (id: number) => service.submitMilestone(id),
+    onSuccess: invalidate,
+  });
+
+  const approveMilestone = useMutation({
+    mutationFn: (id: number) => service.approveMilestone(id),
+    onSuccess: invalidate,
+  });
+
+  const rejectMilestone = useMutation({
+    mutationFn: (id: number) => service.rejectMilestone(id),
+    onSuccess: invalidate,
+  });
+
+  const completeMilestone = useMutation({
+    mutationFn: (id: number) => service.completeMilestone(id),
+    onSuccess: invalidate,
+  });
+
   return {
     contractId: fundingAgreementContractId,
     agreement,
@@ -57,5 +77,9 @@ export function useAgreement() {
     activate,
     pause,
     resume,
+    submitMilestone,
+    approveMilestone,
+    rejectMilestone,
+    completeMilestone,
   };
 }

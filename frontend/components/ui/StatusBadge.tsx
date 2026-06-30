@@ -1,23 +1,23 @@
 import { enumTag } from "@/utils/format";
 
 const colors: Record<string, string> = {
-  Draft: "bg-slate-100 text-slate-700",
-  Active: "bg-emerald-100 text-emerald-700",
-  Paused: "bg-amber-100 text-amber-700",
-  Cancelled: "bg-red-100 text-red-700",
-  Completed: "bg-blue-100 text-blue-700",
-  Archived: "bg-zinc-100 text-zinc-700",
-  Pending: "bg-slate-100 text-slate-700",
-  Submitted: "bg-purple-100 text-purple-700",
-  Approved: "bg-emerald-100 text-emerald-700",
-  Rejected: "bg-red-100 text-red-700",
+  Draft: "border-slate-500/30 bg-slate-400/10 text-slate-200",
+  Active: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
+  Paused: "border-amber-400/30 bg-amber-400/10 text-amber-300",
+  Cancelled: "border-red-400/30 bg-red-400/10 text-red-300",
+  Completed: "border-sky-400/30 bg-sky-400/10 text-sky-300",
+  Archived: "border-zinc-400/30 bg-zinc-400/10 text-zinc-300",
+  Pending: "border-slate-500/30 bg-slate-400/10 text-slate-200",
+  Submitted: "border-violet-400/30 bg-violet-400/10 text-violet-300",
+  Approved: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
+  Rejected: "border-red-400/30 bg-red-400/10 text-red-300",
 };
 
 export function StatusBadge({ status }: { status: { tag: string } | string }) {
   const label = enumTag(status);
   return (
     <span
-      className={`rounded-full px-3 py-1 text-xs font-semibold ${colors[label] ?? colors.Draft}`}
+      className={`rounded-full border px-3 py-1 font-mono text-xs font-medium tracking-[0.04em] ${colors[label] ?? colors.Draft}`}
     >
       {label}
     </span>

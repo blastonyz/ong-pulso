@@ -1,8 +1,16 @@
 import { type ReactNode } from "react";
 
-export function Card({ children }: { children: ReactNode }) {
+export function Card({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section
+      className={`glass-panel subtle-gradient rounded-2xl p-6 ${className}`}
+    >
       {children}
     </section>
   );
@@ -16,10 +24,12 @@ export function CardHeader({
   description?: string;
 }) {
   return (
-    <div className="mb-5">
-      <h2 className="text-lg font-semibold text-slate-950">{title}</h2>
+    <div className="mb-5 border-b border-outline/70 pb-4">
+      <h2 className="text-xl font-semibold tracking-[-0.01em] text-foreground">
+        {title}
+      </h2>
       {description ? (
-        <p className="mt-1 text-sm text-slate-500">{description}</p>
+        <p className="mt-1 text-sm leading-5 text-muted">{description}</p>
       ) : null}
     </div>
   );

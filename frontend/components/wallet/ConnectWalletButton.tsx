@@ -11,7 +11,7 @@ export function ConnectWalletButton() {
   if (isConnected) {
     return (
       <div className="flex items-center gap-3">
-        <span className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700">
+        <span className="rounded-full border border-outline bg-surface-high px-3 py-1 font-mono text-sm text-muted">
           {shortAddress(address)}
         </span>
         <Button variant="secondary" onClick={disconnect}>
@@ -23,7 +23,7 @@ export function ConnectWalletButton() {
 
   return (
     <Button onClick={connect} disabled={isConnecting}>
-      {isConnecting ? "Connecting..." : "Connect Freighter"}
+      {isConnecting ? "Connecting..." : "Connect Wallet"}
     </Button>
   );
 }

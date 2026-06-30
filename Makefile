@@ -29,7 +29,7 @@ METHOD ?= get_version
 ACTION ?= Activate
 ARGS ?=
 
-.PHONY: help test fmt build bindings deploy invoke invoke-send init check-init-env \
+.PHONY: help test fmt build bindings deploy new-agreement invoke invoke-send init check-init-env \
 	get-agreement get-config get-status get-metadata get-milestones get-milestone get-participants \
 	activate pause resume cancel complete archive submit-milestone approve-milestone reject-milestone complete-milestone \
 	update-metadata transfer-role has-role can-execute
@@ -43,6 +43,7 @@ help:
 	@echo "  make build"
 	@echo "  make bindings"
 	@echo "  make deploy NETWORK=testnet"
+	@echo "  make new-agreement NETWORK=testnet"
 	@echo ""
 	@echo "Generic invoke:"
 	@echo "  make invoke CONTRACT_ID=C... METHOD=get_status"
@@ -85,6 +86,13 @@ deploy: build
 		--wasm "$(WASM)" \
 		--source "$(SOURCE)" \
 		--network "$(NETWORK)"
+
+new-agreement: deploy
+	@echo "Copy the new contract id above into:"
+	@echo "  CONTRACT_ID=..."
+	@echo "  frontend/.env.local: NEXT_PUBLIC_FUNDING_AGREEMENT_CONTRACT_ID=..."
+	@echo "Then initialize it with:"
+	@echo "  make init CONTRACT_ID=C..."
 
 invoke:
 	@stellar contract invoke \

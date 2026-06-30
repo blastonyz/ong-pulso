@@ -37,4 +37,24 @@ export class FundingAgreementService {
     const tx = await this.client.resume();
     return tx.signAndSend();
   }
+
+  async submitMilestone(id: number) {
+    const tx = await this.client.submit_milestone({ id });
+    return tx.signAndSend();
+  }
+
+  async approveMilestone(id: number) {
+    const tx = await this.client.approve_milestone({ id });
+    return tx.signAndSend();
+  }
+
+  async rejectMilestone(id: number) {
+    const tx = await this.client.reject_milestone({ id });
+    return tx.signAndSend();
+  }
+
+  async completeMilestone(id: number) {
+    const tx = await this.client.complete_milestone({ id });
+    return tx.signAndSend();
+  }
 }

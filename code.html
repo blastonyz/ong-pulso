@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard - Impact Protocol</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#de8712",
+                        "surface-variant": "#30353a",
+                        "primary-container": "#0ea5e9",
+                        "surface-container-low": "#171c20",
+                        "on-secondary-container": "#c9aeff",
+                        "on-tertiary-fixed-variant": "#693c00",
+                        "tertiary-fixed-dim": "#ffb86e",
+                        "tertiary": "#ffb86e",
+                        "primary": "#89ceff",
+                        "secondary-fixed": "#eaddff",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#0f1418",
+                        "surface-container-high": "#252b2f",
+                        "on-tertiary-container": "#4d2b00",
+                        "on-surface-variant": "#bec8d2",
+                        "on-background": "#dee3e9",
+                        "primary-fixed": "#c9e6ff",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#003751",
+                        "surface-container-highest": "#30353a",
+                        "on-primary": "#00344d",
+                        "on-primary-fixed-variant": "#004c6e",
+                        "outline": "#88929b",
+                        "tertiary-fixed": "#ffdcbd",
+                        "secondary-container": "#6001d1",
+                        "on-tertiary": "#492900",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary-fixed": "#25005a",
+                        "inverse-primary": "#006591",
+                        "surface-container": "#1b2024",
+                        "surface-bright": "#353a3e",
+                        "inverse-on-surface": "#2c3135",
+                        "primary-fixed-dim": "#89ceff",
+                        "surface": "#0f1418",
+                        "on-secondary": "#3f008e",
+                        "inverse-surface": "#dee3e9",
+                        "on-tertiary-fixed": "#2c1600",
+                        "background": "#0f1418",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#001e2f",
+                        "surface-container-lowest": "#0a0f13",
+                        "secondary": "#d2bbff",
+                        "surface-tint": "#89ceff",
+                        "error-container": "#93000a",
+                        "outline-variant": "#3e4850",
+                        "on-surface": "#dee3e9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xs": "4px",
+                        "stack-md": "16px",
+                        "stack-lg": "24px",
+                        "stack-xl": "48px",
+                        "sidebar-width": "280px",
+                        "gutter": "24px",
+                        "margin-desktop": "32px",
+                        "stack-sm": "8px",
+                        "sidebar-collapsed": "64px",
+                        "container-max": "1440px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "display": ["Geist"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(62, 72, 80, 0.4);
+        }
+        
+        .subtle-gradient {
+            background: linear-gradient(180deg, rgba(137, 206, 255, 0.03) 0%, rgba(15, 20, 24, 0) 100%);
+        }
+
+        /* Chart simple animations */
+        @keyframes fillUp {
+            from { height: 0; }
+            to { height: 100%; }
+        }
+        .animate-bar {
+            animation: fillUp 1s ease-out forwards;
+            transform-origin: bottom;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex selection:bg-primary selection:text-on-primary">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col fixed left-0 top-0 h-screen w-sidebar-width bg-surface-container border-r border-outline-variant z-50">
+<!-- Header -->
+<div class="p-gutter border-b border-outline-variant flex flex-col gap-stack-xs">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold shadow-[0_0_15px_rgba(137,206,255,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hexagon</span>
+</div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-on-surface">Impact Protocol</h1>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Institutional Funding</p>
+</div>
+<!-- Navigation -->
+<nav class="flex-1 overflow-y-auto py-stack-md flex flex-col gap-1">
+<a class="flex items-center gap-stack-sm bg-surface-container-highest text-primary border-l-4 border-primary px-4 py-2 hover:bg-surface-container-high transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body-md text-body-md font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-colors duration-200 ease-in-out border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">description</span>
+<span class="font-body-md text-body-md">Funding Agreements</span>
+</a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-colors duration-200 ease-in-out border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">corporate_fare</span>
+<span class="font-body-md text-body-md">Organizations</span>
+</a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-colors duration-200 ease-in-out border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">payments</span>
+<span class="font-body-md text-body-md">Disbursements</span>
+</a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-colors duration-200 ease-in-out border-l-4 border-transparent hover:border-outline-variant" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">history</span>
+<span class="font-body-md text-body-md">Activity</span>
+</a>
+</nav>
+<!-- Footer / Settings -->
+<div class="p-4 border-t border-outline-variant">
+<a class="flex items-center gap-stack-sm text-on-surface-variant px-4 py-2 hover:bg-surface-container-high rounded-md transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 md:ml-sidebar-width flex flex-col min-h-screen relative">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-40 flex justify-between items-center h-16 px-gutter bg-background/80 backdrop-blur-md border-b border-outline-variant">
+<!-- Mobile Brand (Visible only on mobile) -->
+<div class="md:hidden flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]">hexagon</span>
+</div>
+<span class="font-headline-md text-headline-md font-extrabold text-on-surface">Impact Protocol</span>
+</div>
+<!-- Search (Web) -->
+<div class="hidden md:flex items-center w-64">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-md py-1.5 pl-10 pr-4 font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all" placeholder="Search agreements..." type="text"/>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4 ml-auto">
+<button class="text-on-surface-variant hover:text-primary transition-all active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hidden sm:flex bg-primary hover:bg-primary-fixed text-on-primary font-label-md text-label-md px-4 py-2 rounded-md transition-colors active:scale-95 items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+                    Connect Wallet
+                </button>
+<!-- Avatar -->
+<button class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden hover:border-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A macro shot of a sleek, dark metallic surface with an abstract glowing blue neon hexagon embossed lightly into the metal, moody studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ_qt0N7xxbc05_t8nhUGFIEnVxTIhrWukXmHxqwPgrEorTAZUjFTuIx90RPZVv0op93j1K5282AHEFZMBBy1LXLSd7Db7LT6l8Mft6EWxcDqqlFNtU0-Gnx4TXggtKgoRxc-v6vwaf8hVNi4hlJNYrldTVubprFMeQIU1Dt_CrGXwwLHGFkRKSEOi7mMvv1j0H-kvYftOqQsN2OUw0m_lNBQv8Ajan4s6PQh0TLwJ9Stt8rof11NxNs0pMG-iH23Q8uZPh1xjNxI"/>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 p-margin-mobile md:p-gutter xl:p-margin-desktop max-w-container-max mx-auto w-full flex flex-col gap-stack-xl">
+<!-- 1. Hero Section -->
+<section class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div>
+<h2 class="font-display text-display text-on-surface tracking-tight">Dashboard</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 flex items-center gap-2">
+                        Funding Agreements powered by <span class="font-label-md text-label-md bg-surface-container-high px-2 py-0.5 rounded border border-outline-variant">Stellar</span>
+</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container-highest border border-outline-variant text-on-surface hover:bg-surface-bright font-label-md text-label-md px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export
+                    </button>
+<button class="bg-primary hover:bg-primary-fixed text-on-primary font-label-md text-label-md px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        New Agreement
+                    </button>
+</div>
+</section>
+<!-- 2. StatsGrid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Stat Card 1 -->
+<div class="glass-panel subtle-gradient rounded-xl p-5 flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start">
+<p class="font-label-md text-label-md text-on-surface-variant">Total Agreements</p>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">description</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface">128</h3>
+<span class="font-label-sm text-label-sm text-primary flex items-center"><span class="material-symbols-outlined text-[14px]">arrow_upward</span> 12%</span>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-panel subtle-gradient rounded-xl p-5 flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start">
+<p class="font-label-md text-label-md text-on-surface-variant">Active</p>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">check_circle</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface">95</h3>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="glass-panel subtle-gradient rounded-xl p-5 flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start">
+<p class="font-label-md text-label-md text-on-surface-variant">Completed</p>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">task_alt</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface">21</h3>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="glass-panel subtle-gradient rounded-xl p-5 flex flex-col gap-3 group hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start">
+<p class="font-label-md text-label-md text-on-surface-variant">Funds Managed</p>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">account_balance</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface">$4.8M</h3>
+<span class="font-label-sm text-label-sm text-primary flex items-center"><span class="material-symbols-outlined text-[14px]">arrow_upward</span> 4.3%</span>
+</div>
+</div>
+</section>
+<!-- 3. Two-Column Layout (Table & Activity) -->
+<section class="grid grid-cols-1 xl:grid-cols-3 gap-gutter">
+<!-- Left (Wide): AgreementTable -->
+<div class="xl:col-span-2 glass-panel rounded-xl flex flex-col overflow-hidden">
+<div class="p-5 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Active Agreements</h3>
+<button class="text-primary font-label-md text-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-lowest/50 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<th class="p-4 font-medium">Agreement</th>
+<th class="p-4 font-medium">Organization</th>
+<th class="p-4 font-medium">Status</th>
+<th class="p-4 font-medium">Progress</th>
+<th class="p-4 font-medium text-right">Amount</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4">
+<div class="font-medium group-hover:text-primary transition-colors">Clean Water Initiative</div>
+<div class="text-on-surface-variant font-label-sm text-label-sm">Updated 2h ago</div>
+</td>
+<td class="p-4">Global Health Org</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-[#004c6e]/30 text-[#89ceff] border border-[#004c6e]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#89ceff]"></span> Active
+                                        </span>
+</td>
+<td class="p-4 w-48">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] rounded-full"></div>
+</div>
+<span class="text-on-surface-variant text-xs">75%</span>
+</div>
+</td>
+<td class="p-4 text-right font-label-md text-label-md">$1.2M</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4">
+<div class="font-medium group-hover:text-primary transition-colors">EduTech Fund Q3</div>
+<div class="text-on-surface-variant font-label-sm text-label-sm">Updated 1d ago</div>
+</td>
+<td class="p-4">Future Builders</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-tertiary-container/20 text-tertiary border border-tertiary/30">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Paused
+                                        </span>
+</td>
+<td class="p-4 w-48">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[30%] rounded-full"></div>
+</div>
+<span class="text-on-surface-variant text-xs">30%</span>
+</div>
+</td>
+<td class="p-4 text-right font-label-md text-label-md">$450k</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4">
+<div class="font-medium group-hover:text-primary transition-colors">Solar Microgrid Alpha</div>
+<div class="text-on-surface-variant font-label-sm text-label-sm">Updated 3d ago</div>
+</td>
+<td class="p-4">Energy Alliance</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-[#004c6e]/30 text-[#89ceff] border border-[#004c6e]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#89ceff]"></span> Active
+                                        </span>
+</td>
+<td class="p-4 w-48">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[15%] rounded-full"></div>
+</div>
+<span class="text-on-surface-variant text-xs">15%</span>
+</div>
+</td>
+<td class="p-4 text-right font-label-md text-label-md">$890k</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4">
+<div class="font-medium group-hover:text-primary transition-colors">Reforestation Grant</div>
+<div class="text-on-surface-variant font-label-sm text-label-sm">Updated 1w ago</div>
+</td>
+<td class="p-4">Earth First</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-secondary-container/20 text-secondary border border-secondary/30">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Completed
+                                        </span>
+</td>
+<td class="p-4 w-48">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[100%] rounded-full"></div>
+</div>
+<span class="text-on-surface-variant text-xs">100%</span>
+</div>
+</td>
+<td class="p-4 text-right font-label-md text-label-md">$2.1M</td>
+</tr>
+<!-- Row 5 (Draft) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4">
+<div class="font-medium group-hover:text-primary transition-colors text-on-surface-variant">Urban Farming Seed</div>
+<div class="text-on-surface-variant/50 font-label-sm text-label-sm">Draft saved</div>
+</td>
+<td class="p-4 text-on-surface-variant">TBD</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Draft
+                                        </span>
+</td>
+<td class="p-4 w-48">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-on-surface-variant w-[0%] rounded-full"></div>
+</div>
+<span class="text-on-surface-variant text-xs">0%</span>
+</div>
+</td>
+<td class="p-4 text-right font-label-md text-label-md text-on-surface-variant">-</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right (Narrow): RecentActivity -->
+<div class="xl:col-span-1 glass-panel rounded-xl flex flex-col overflow-hidden">
+<div class="p-5 border-b border-outline-variant bg-surface-container-low/50">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Recent Activity</h3>
+</div>
+<div class="p-5 flex-1 overflow-y-auto">
+<div class="relative border-l border-outline-variant ml-3 space-y-6 pb-4">
+<!-- Activity Item 1 -->
+<div class="relative pl-6">
+<span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-primary border-2 border-background"></span>
+<div class="flex flex-col gap-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-medium">Agreement Created:</span> Global Health Grant</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 hours ago</span>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="relative pl-6">
+<span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-secondary border-2 border-background"></span>
+<div class="flex flex-col gap-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-medium">Milestone Approved:</span> Solar Project Phase 1</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">5 hours ago</span>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="relative pl-6">
+<span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-surface-variant border-2 border-background"></span>
+<div class="flex flex-col gap-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-medium">Funds Disbursed:</span> 50,000 USDC to EduTech Fund</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1 day ago</span>
+</div>
+</div>
+<!-- Activity Item 4 -->
+<div class="relative pl-6">
+<span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-tertiary border-2 border-background"></span>
+<div class="flex flex-col gap-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-medium">Agreement Paused:</span> River Clean Up</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 days ago</span>
+</div>
+</div>
+<!-- Activity Item 5 -->
+<div class="relative pl-6">
+<span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-surface-variant border-2 border-background"></span>
+<div class="flex flex-col gap-1">
+<p class="font-body-sm text-body-sm text-on-surface"><span class="font-medium">Organization Added:</span> Ocean Defenders</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3 days ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Charts Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Chart 1: Funding Over Time (Mock Area Chart via CSS) -->
+<div class="glass-panel rounded-xl p-5 flex flex-col h-80 relative overflow-hidden">
+<div class="flex justify-between items-center z-10 mb-6">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Funding Volume</h3>
+<select class="bg-surface-container-high border-outline-variant text-on-surface font-label-sm text-label-sm rounded-md py-1 px-2 focus:ring-primary focus:border-primary">
+<option>YTD</option>
+<option>1Y</option>
+<option>All</option>
+</select>
+</div>
+<!-- CSS Mock Line/Area Chart -->
+<div class="flex-1 w-full relative flex items-end justify-between px-2 pt-10 z-10">
+<!-- Y Axis labels mock -->
+<div class="absolute left-0 top-12 bottom-8 flex flex-col justify-between text-[10px] text-on-surface-variant font-label-sm">
+<span>$5M</span>
+<span>$2.5M</span>
+<span>$0</span>
+</div>
+<!-- Grid lines -->
+<div class="absolute inset-0 top-12 bottom-8 left-8 flex flex-col justify-between border-l border-b border-outline-variant/30">
+<div class="w-full border-t border-outline-variant/10"></div>
+<div class="w-full border-t border-outline-variant/10"></div>
+<div class="w-full"></div>
+</div>
+<!-- Bars mapping -->
+<div class="ml-8 w-full h-full flex items-end justify-between gap-2">
+<div class="w-full bg-primary/20 hover:bg-primary/40 transition-colors rounded-t-sm h-[20%] relative group animate-bar">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container-high text-xs px-2 py-1 rounded shadow-lg pointer-events-none transition-opacity z-20">$1M</div>
+</div>
+<div class="w-full bg-primary/20 hover:bg-primary/40 transition-colors rounded-t-sm h-[35%] relative group animate-bar" style="animation-delay: 0.1s">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container-high text-xs px-2 py-1 rounded shadow-lg pointer-events-none transition-opacity z-20">$1.7M</div>
+</div>
+<div class="w-full bg-primary/30 hover:bg-primary/50 transition-colors rounded-t-sm h-[30%] relative group animate-bar" style="animation-delay: 0.2s">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container-high text-xs px-2 py-1 rounded shadow-lg pointer-events-none transition-opacity z-20">$1.5M</div>
+</div>
+<div class="w-full bg-primary/40 hover:bg-primary/60 transition-colors rounded-t-sm h-[50%] relative group animate-bar" style="animation-delay: 0.3s">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container-high text-xs px-2 py-1 rounded shadow-lg pointer-events-none transition-opacity z-20">$2.5M</div>
+</div>
+<div class="w-full bg-primary/50 hover:bg-primary/70 transition-colors rounded-t-sm h-[75%] relative group animate-bar" style="animation-delay: 0.4s">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container-high text-xs px-2 py-1 rounded shadow-lg pointer-events-none transition-opacity z-20">$3.7M</div>
+</div>
+<div class="w-full bg-primary hover:bg-primary-fixed transition-colors rounded-t-sm h-[90%] relative group animate-bar" style="animation-delay: 0.5s">
+<div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_10px_#89ceff]"></div>
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-surface-container-high text-xs px-2 py-1 rounded shadow-lg pointer-events-none transition-opacity z-20">$4.5M</div>
+</div>
+</div>
+</div>
+<!-- X Axis labels mock -->
+<div class="w-full pl-8 flex justify-between text-[10px] text-on-surface-variant font-label-sm mt-2 z-10">
+<span>Jan</span>
+<span>Mar</span>
+<span>May</span>
+<span>Jul</span>
+<span>Sep</span>
+<span>Nov</span>
+</div>
+<!-- Ambient glow -->
+<div class="absolute bottom-0 right-0 w-1/2 h-1/2 bg-primary/10 blur-[50px] rounded-full pointer-events-none"></div>
+</div>
+<!-- Chart 2: Status Distribution -->
+<div class="glass-panel rounded-xl p-5 flex flex-col h-80">
+<div class="mb-6">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Status Distribution</h3>
+</div>
+<div class="flex-1 flex items-center justify-center gap-8">
+<!-- Mock Donut Chart (CSS) -->
+<div class="relative w-40 h-40 rounded-full flex items-center justify-center shrink-0" style="background: conic-gradient(
+                                #89ceff 0% 74%, 
+                                #d2bbff 74% 90%, 
+                                #ffb86e 90% 95%, 
+                                #3e4850 95% 100%
+                             );">
+<div class="w-32 h-32 bg-surface rounded-full flex flex-col items-center justify-center relative z-10">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">128</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex flex-col gap-3 font-body-sm text-body-sm">
+<div class="flex items-center justify-between gap-4 w-32">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded bg-primary"></span>
+<span class="text-on-surface">Active</span>
+</div>
+<span class="font-medium">95</span>
+</div>
+<div class="flex items-center justify-between gap-4 w-32">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded bg-secondary"></span>
+<span class="text-on-surface">Completed</span>
+</div>
+<span class="font-medium">21</span>
+</div>
+<div class="flex items-center justify-between gap-4 w-32">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded bg-tertiary"></span>
+<span class="text-on-surface">Paused</span>
+</div>
+<span class="font-medium">7</span>
+</div>
+<div class="flex items-center justify-between gap-4 w-32">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded bg-outline-variant"></span>
+<span class="text-on-surface">Draft</span>
+</div>
+<span class="font-medium">5</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

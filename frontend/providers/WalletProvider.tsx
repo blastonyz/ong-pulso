@@ -5,8 +5,9 @@ import {
   getNetwork,
   isConnected,
   requestAccess,
-  signTransaction,
+  signTransaction as freighterSignTransaction,
 } from "@stellar/freighter-api";
+import type { SignTransaction } from "@stellar/stellar-sdk/contract";
 import {
   createContext,
   type ReactNode,
@@ -26,6 +27,7 @@ type WalletContextValue = {
   disconnect: () => void;
   refresh: () => Promise<void>;
   sign: (xdr: string, networkPassphrase: string) => Promise<string>;
+  signTransaction: SignTransaction;
 };
 
 const WalletContext = createContext<WalletContextValue | null>(null);
@@ -50,6 +52,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
+    // Freighter state is an external browser source; refresh syncs it once.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh();
   }, [refresh]);
 
@@ -88,8 +92,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     async (xdr: string, networkPassphrase: string) => {
       if (!address) throw new Error("Wallet not connected");
 
-      const { signedTxXdr, error } = await signTransaction(xdr, {
+      const { signedTxXdr, error } = await freighterSignTransaction(xdr, {
         networkPassphrase,
+        address,
       });
       if (error || !signedTxXdr) {
         throw new Error(error?.message ?? "Transaction signing failed");
@@ -110,6 +115,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       disconnect,
       refresh,
       sign,
+      signTransaction: freighterSignTransaction,
     }),
     [address, connect, disconnect, isConnecting, network, refresh, sign],
   );
@@ -121,6 +127,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
 export function useWalletContext() {
   const value = useContext(WalletContext);
-  if (!value) throw new Error("useWalletContext must be used inside WalletProvider");
+  if (!value) {
+    throw new Error("useWalletContext must be used inside WalletProvider");
+  }
   return value;
 }
